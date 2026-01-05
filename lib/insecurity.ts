@@ -63,13 +63,13 @@ export const isAuthorized = () => {
     if (decodedJws?.header.alg !== jws.ALGORITHMS[3]) {
       return res.status(401).json({ status: 'error', message: 'Token signature error' })
     } else {
-        // Verify signature using RSA 256, or HMAC 256
+      // Verify signature using RSA 256, or HMAC 256
       jwt.verify(token, publicKey, { audience: 'web', issuer: 'juice-shop', algorithms: ['RS256'] }, function (err, decoded) {
-            if (err) {
-              return res.status(401).json({ status: 'error', message: 'You need to be logged in to perform this action.' })
-            } else {
-              next()
-          }
+        if (err) {
+          return res.status(401).json({ status: 'error', message: 'You need to be logged in to perform this action.' })
+        } else {
+          next()
+        }
       })
     }
   }
